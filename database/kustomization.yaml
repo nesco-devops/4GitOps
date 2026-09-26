@@ -1,0 +1,18 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: appgestion
+resources:
+  - postgres-service.yaml
+  - postgres-statefulset.yaml
+configMapGenerator:
+  - name: postgres-init
+    files:
+      - init.sql
+
+generatorOptions:
+  disableNameSuffixHash: true
+  labels:
+    app.kubernetes.io/name: postgres
+    app.kubernetes.io/component: database
+    app.kubernetes.io/managed-by: gitops
