@@ -7,3 +7,6 @@ resources:
   - backend
   - frontend
   - ingress
+  - app3
+
+
