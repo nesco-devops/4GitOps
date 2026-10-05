@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: app3
-          image: nesco52/app3:sha-2983cda
+          image: nesco52/app3:sha-3fa7c7f
           ports:
             - containerPort: 3000
           readinessProbe:
