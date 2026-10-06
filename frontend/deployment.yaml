@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: nesco52/appgestion-frontend:sha-4aa346e
+          image: nesco52/appgestion-frontend:sha-f1489d4
           imagePullPolicy: IfNotPresent
 
           ports:
