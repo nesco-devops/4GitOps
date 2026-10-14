@@ -20,11 +20,24 @@ spec:
         app.kubernetes.io/name: postgres
         app.kubernetes.io/component: database
     spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 70
+        runAsGroup: 70
+        fsGroup: 70
+        seccompProfile:
+          type: RuntimeDefault
+
       containers:
         - name: postgres
           image: postgres:16-alpine
           imagePullPolicy: IfNotPresent
-
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
           ports:
             - name: postgres
               containerPort: 5432
@@ -82,16 +95,28 @@ spec:
           volumeMounts:
             - name: postgres-data
               mountPath: /var/lib/postgresql/data
-
+              
             - name: postgres-init
               mountPath: /docker-entrypoint-initdb.d/init.sql
               subPath: init.sql
               readOnly: true
+              
+            - name: postgres-run
+              mountPath: /var/run/postgresql
+            - name: postgres-tmp
+              mountPath: /tmp
 
       volumes:
         - name: postgres-init
           configMap:
             name: postgres-init
+        - name: postgres-run
+          emptyDir:
+            sizeLimit: 16Mi
+
+        - name: postgres-tmp
+          emptyDir:
+            sizeLimit: 128Mi
 
   volumeClaimTemplates:
     - metadata:
