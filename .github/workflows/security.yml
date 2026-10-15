@@ -18,6 +18,13 @@ jobs:
     steps:
       - name: Récupérer les manifests
         uses: actions/checkout@v4
+      - name: Valider les manifests avec Kustomize
+        shell: bash
+        run: |
+          set -euo pipefail
+          kubectl version --client
+          kubectl kustomize . > /dev/null
+          echo "Validation Kustomize réussie."
 
       - name: Rechercher les secrets avec Trivy
         uses: aquasecurity/trivy-action@v0.36.0
