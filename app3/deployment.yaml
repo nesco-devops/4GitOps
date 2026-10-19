@@ -25,7 +25,7 @@ spec:
 
       containers:
         - name: app3
-          image: nesco52/app3:sha-5b0ef1b
+          image: nesco52/app3:sha-2cb02ea
 
           securityContext:
             allowPrivilegeEscalation: false
