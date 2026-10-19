@@ -44,6 +44,14 @@ spec:
               protocol: TCP
 
           env:
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
+
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_USER
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
